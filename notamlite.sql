@@ -1,0 +1,122 @@
+Create Empty DB  - proper1.sqlite
+
+Inspired by http://latuviitta.org/downloads/make_gpkg.txt
+
+select gpkgCreateBaseTables();
+
+CREATE TABLE notams
+(
+  notam_id bigint NOT NULL,
+  notam_code character varying(20),
+  notam_type character(1),
+  related_id bigint,
+  subject character varying(2),
+  status character varying(2),
+  vfr_related character(1),
+  ifr_related character(1),
+  purpose_n character(1),
+  purpose_b character(1),
+  purpose_o character(1),
+  purpose_m character(1),
+  scope_a character(1),
+  scope_e character(1),
+  scope_w character(1),
+  fir character varying(6),
+  start_time timestamp without time zone,
+  end_time timestamp without time zone,
+  estimated_end character(1),
+  schedule character varying(50),
+  text character varying(3000),
+  lower_altitude integer,
+  lower_altitude_m integer,
+  upper_altitude integer,
+  upper_altitude_m integer,
+  latitude double precision,
+  longitude double precision,
+  radius integer,
+  radius_m integer,
+  category character varying(20),
+  raw_notam character varying(3000),
+  CONSTRAINT notams_pkey PRIMARY KEY (notam_id)
+)
+
+
+
+insert into gpkg_contents (table_name,data_type,identifier,description,last_change,min_x,min_y,max_x,max_y,srs_id) values ('notams','features','notams',NULL,'2015-04-22T14:58:01.000Z',NULL,NULL,NULL,NULL,4326);
+
+
+select gpkgAddGeometryColumn('notams','geometry','POLYGON',0,0,4326);
+
+
+select gpkgAddGeometryTriggers('notams','geometry');
+
+
+select gpkgAddSpatialIndex('notams','geometry');
+
+
+
+---------------1111------------------
+INSERT INTO notams(
+            notam_id, notam_code, notam_type, related_id, subject, status, 
+            vfr_related, ifr_related, purpose_n, purpose_b, purpose_o, purpose_m, 
+            scope_a, scope_e, scope_w, fir, start_time, end_time, estimated_end, 
+            schedule, text, lower_altitude, lower_altitude_m, upper_altitude, 
+            upper_altitude_m, latitude, longitude, radius, radius_m, category, 
+            raw_notam)
+    VALUES (1, 'Y0115/13', 'N', NULL, 'WG', 'CA', '1', '1', '1', '0', '1', '0', '0', '1', '1', 'EGTT', '2013-04-21 08:00:00', '2013-04-22 06:51:38.112', '0', 'HJ DAILY', 'EXPECTED GLIDER ACTIVITY DURING THE HOURS OF DAYLIGHT', 0, NULL, 5000, NULL, 53.256833, -4.3768330000000004, 3, NULL, 'UNKNOWN', '(Y0115/13 NOTAMNQ) EGTT/QWGCA/IV/NO/EW/000/020/5315N00422W001A) EGTTB) 1301150700C) 1306132100D) HJ DAILYE) EXPECTED GLIDER ACTIVITY DURING THE HOURS OF DAYLIGHT) GLG) 5000FT AGL)
+');
+
+
+update notams set geometry=AsGPB(ST_GeomFromText('POLYGON((-4.376833 53.306755919518,-4.362360062531 53.305996603785,-4.348328378718 53.303741806835,-4.335165613179 53.30006026644,-4.323272687474 53.295064191843,-4.313011480198 53.288905812246,-4.304693769201 53.28177269984,-4.298571759383 53.273882015767,-4.294830483692 53.26547386045,-4.293582299722 53.256803936636,-4.294863635969 53.248135752872,-4.298634065302 53.239732607828,-4.304777713778 53.231849599943,-4.313106938502 53.224725903781,-4.323368145835 53.218577544749,-4.335249557901 53.213590886411,-4.348390684803 53.209917022226,-4.362393214916 53.207667235567,-4.376833 53.206909659892,-4.391272785084 53.207667235567,-4.405275315197 53.209917022226,-4.418416442099 53.213590886411,-4.430297854165 53.218577544749,-4.440559061498 53.224725903781,-4.448888286222 53.231849599943,-4.455031934698 53.239732607828,-4.458802364031 53.248135752872,-4.460083700278 53.256803936636,-4.458835516308 53.26547386045,-4.455094240617 53.273882015767,-4.448972230799 53.28177269984,-4.440654519802 53.288905812246,-4.430393312526 53.295064191843,-4.418500386821 53.30006026644,-4.405337621282 53.303741806835,-4.391305937469 53.305996603785,-4.376833 53.306755919518))', 4326)) where notam_id=1
+
+---------------22222---------------------
+
+
+INSERT INTO notams(
+            notam_id, notam_code, notam_type, related_id, subject, status, 
+            vfr_related, ifr_related, purpose_n, purpose_b, purpose_o, purpose_m, 
+            scope_a, scope_e, scope_w, fir, start_time, end_time, estimated_end, 
+            schedule, text, lower_altitude, lower_altitude_m, upper_altitude, 
+            upper_altitude_m, latitude, longitude, radius, radius_m, category, 
+            raw_notam)
+    VALUES (2, 'Y0116/13', 'N', NULL, 'WB', 'CA', '1', '1', '1', '0', '1', '0', '0', '1', '1', 'EGCK', '2013-04-21 08:00:00', '2013-04-22 06:51:38.112', '0', '', 'AIR DISPLAY/AEROBATICS. ACTIVITY WI 2NM RADIUS OF 530843N 0041633W. CAERNRFON FESTIVAL.', 0, NULL, 10000, NULL, 53.145277776999997, -4.2783333333, 2, NULL, 'UNKNOWN', '(Y0115/13 NOTAMNQ) EGTT/QWGCA/IV/NO/EW/000/020/5308N00416W002A) EGTTB) 1301150700C) 1306132100E) AIR DISPLAY/AEROBATICS. ACTIVITY WI 2NM RADIUS OF 530843N 0041633W ) GLG) 10000FT AGL)
+');
+
+
+update notams set geometry=AsGPB(ST_GeomFromText('POLYGON((-4.275833333 53.178560397567,-4.266213439678 53.178054372908,-4.25688650378 53.176551709076,-4.248136501318 53.174098164061,-4.240229728094 53.170768441228,-4.233406656341 53.166663900907,-4.227874600543 53.161909457842,-4.223801418591 53.15664976151,-4.221310439562 53.151044778321,-4.220476768811 53.14526491265,-4.22132507627 53.139485817193,-4.223828926609 53.133883051745,-4.227911662003 53.128626753192,-4.233448801088 53.123876478119,-4.240271872853 53.119776373286,-4.248173562806 53.116450818448,-4.25691401183 53.114000671215,-4.266228076407 53.112500225129,-4.275833333 53.111994970685,-4.285438589593 53.112500225129,-4.29475265417 53.114000671215,-4.303493103194 53.116450818448,-4.311394793147 53.119776373286,-4.318217864912 53.123876478119,-4.323755003997 53.128626753192,-4.327837739391 53.133883051745,-4.33034158973 53.139485817193,-4.331189897189 53.14526491265,-4.330356226438 53.151044778321,-4.327865247409 53.15664976151,-4.323792065457 53.161909457842,-4.318260009659 53.166663900907,-4.311436937906 53.170768441228,-4.303530164682 53.174098164061,-4.29478016222 53.176551709076,-4.285453226322 53.178054372908,-4.275833333 53.178560397567))', 4326)) where notam_id=2
+
+--------------3333333--------------------------
+
+INSERT INTO notams(
+            notam_id, notam_code, notam_type, related_id, subject, status, 
+            vfr_related, ifr_related, purpose_n, purpose_b, purpose_o, purpose_m, 
+            scope_a, scope_e, scope_w, fir, start_time, end_time, estimated_end, 
+            schedule, text, lower_altitude, lower_altitude_m, upper_altitude, 
+            upper_altitude_m, latitude, longitude, radius, radius_m, category, 
+            raw_notam)
+    VALUES (3, 'Y0117/13', 'N', NULL, 'WM', 'LW', '1', '1', '1', '0', '1', '0', '0', '1', '1', 'EGCK', '2013-04-21 08:00:00', '2013-04-22 06:51:38.112', '0', '', 'MARITIME LIVE FIRING (SURFACE TO SURFACE) WILL TAKE PLACE WI AREA
+BOUND BY 5250N 00414W - 5246N 00408W AS PART OF EXERCISE.
+ CLEAR RANGE PROCEDURES APPLY.', 0, NULL, 30000, NULL, 52.802, -4.1943999999999999, 3, NULL, 'UNKNOWN', '(Y0115/13 NOTAMNQ) EGTT/QWMLW/IV/NO/EW/000/020/524810N0041140W002A) EGTTB) 1301150700C) 1306132100E) MARITIME LIVE FIRING (SURFACE TO SURFACE) WILL TAKE PLACE WI AREA
+BOUND BY 5250N 00414W - 5246N 00408W AS PART OF EXERCISE.
+CLEAR RANGE PROCEDURES APPLY. G) 30000FT AGL)
+');
+
+
+
+update notams set geometry=AsGPB(ST_GeomFromText('POLYGON((-4.23333333333333 52.8333333333333,-4.13333333333333 52.8333333333333,-4.13333333333333 52.7666666666667,-4.23333333333333 52.7666666666667,-4.23333333333333 52.8333333333333))', 4326)) where notam_id=3
+
+-------------------------444444----------------
+
+INSERT INTO notams(
+            notam_id, notam_code, notam_type, related_id, subject, status, 
+            vfr_related, ifr_related, purpose_n, purpose_b, purpose_o, purpose_m, 
+            scope_a, scope_e, scope_w, fir, start_time, end_time, estimated_end, 
+            schedule, text, lower_altitude, lower_altitude_m, upper_altitude, 
+            upper_altitude_m, latitude, longitude, radius, radius_m, category, 
+            raw_notam)
+    VALUES (4, 'Y0118/13', 'N', NULL, 'WE', 'LW', '1', '1', '1', '0', '1', '0', '0', '1', '1', 'EGCK', '2013-04-21 08:00:00', '2013-04-22 06:51:38.112', '0', '', 'ROTARY WING FLYING. UP TO 9 HEL OPR FM HER MAJESTYS SHIP(HMS)ILLUSTRIOUS WILL CONDUCT TACTICAL TRAINING SERIALS WI 3NM RADIUS OF 524634N 0042384W.', 0, NULL, 12000, NULL, 52.776111111100001, -4.4066666669999996, 3, NULL, 'UNKNOWN', '(Y0115/13 NOTAMNQ) EGTT/QWGCA/IV/NO/EW/000/020/5308N00416W001A) EGTTB) 1301150700C) 1306132100E) ROTARY WING FLYING. UP TO 9 HEL OPR FM HER MAJESTYS SHIP(HMS)ILLUSTRIOUS WILL CONDUCT TACTICAL TRAINING SERIALS WI 3NM RADIUS OF 524634N 0042384W. ) GLG) 12000FT AGL)
+');
+
+
+update notams set geometry=AsGPB(ST_GeomFromText('POLYGON((-4.406666667 52.826038089484,-4.392353973436 52.825278727214,-4.378477622297 52.823023790689,-4.365460521328 52.819342017977,-4.353699138617 52.814345619329,-4.343551341328 52.808186826384,-4.33532546156 52.801053216019,-4.329270928792 52.793161957119,-4.325570753301 52.784753161581,-4.324336081326 52.776082547673,-4.325602972579 52.767413643602,-4.329331481245 52.759009771344,-4.335407043695 52.75112605535,-4.343644113161 52.744001697735,-4.353791910504 52.737852751368,-4.365542103601 52.732865605485,-4.378538174906 52.729191375699,-4.392386192815 52.726941362473,-4.406666667 52.726183710046,-4.420947141185 52.726941362473,-4.434795159094 52.729191375699,-4.447791230399 52.732865605485,-4.459541423496 52.737852751368,-4.469689220839 52.744001697735,-4.477926290305 52.75112605535,-4.484001852755 52.759009771344,-4.487730361421 52.767413643602,-4.488997252674 52.776082547673,-4.487762580699 52.784753161581,-4.484062405208 52.793161957119,-4.47800787244 52.801053216019,-4.469781992672 52.808186826384,-4.459634195383 52.814345619329,-4.447872812672 52.819342017977,-4.434855711703 52.823023790689,-4.420979360564 52.825278727214,-4.406666667 52.826038089484))
+', 4326)) where notam_id=4
